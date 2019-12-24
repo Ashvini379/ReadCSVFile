@@ -3,10 +3,30 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:ReadCSVFile.ViewModels"
+        xmlns:conv="clr-namespace:ReadCSVFile.Converter"
+        
         xmlns:local="clr-namespace:ReadCSVFile"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <conv:TextToColorConverter x:Key="textToColorConverter"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid ItemsSource="{Binding DataTable}" SelectedItem="{Binding SelectedRow}" ColumnWidth="*"  Grid.Row="0" Grid.Column="0" />
+        <Button Content="Get Data" Command="{Binding ShowDataCommand}" Grid.Column="1" Grid.Row="0" Height="30"/>
+        <ProgressBar DockPanel.Dock="Bottom"  Value="{Binding Progress}" Height="18" Grid.Row="1" Grid.ColumnSpan="2" Name="pbCalculationProgress" />
+
     </Grid>
 </Window>
